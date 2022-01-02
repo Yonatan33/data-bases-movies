@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 class SQLConnector:
 
     def __init__(self):
@@ -13,5 +14,9 @@ class SQLConnector:
         self.cursor = self.connector.cursor()
 
     def execute_query(self, cmd):
-        self._cursor.execute(cmd)
+        self.cursor.execute(cmd)
+
+    def close(self):
+        self.connector.close()
+
 

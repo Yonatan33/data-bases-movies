@@ -22,12 +22,12 @@ def import_api_movies_to_db(movie_id):
         genre_list.append((genre["id"]))
     # genre_list = genre_list[:-1]
     movie_details = {
-        "id": movie["id"],
+        "movie_id": movie["id"],
         "title": movie["title"],
         "release_date":movie["release_date"],
         "revenue":movie["revenue"],
         "budget":movie["budget"],
-        "genre":genre_list,
+        "genres":genre_list,
         "language": movie["original_language"]
     }
     return movie_details
@@ -42,10 +42,10 @@ def import_api_series_to_db(series_obj):
 
     # genre_list = genre_list[:-1]
     series_details = {
-        "id": series_obj["id"],
+        "series_id": series_obj["id"],
         "name": series_obj["name"],
         "first_air_date": series_obj["first_air_date"],
-        "genre": genre_list,
+        "genres": genre_list,
         "language": series_obj["original_language"]
     }
     return series_details
@@ -59,3 +59,4 @@ def pull():
         series_details = import_api_series_to_db(series_id)
         push_series(series_details)
 
+pull()

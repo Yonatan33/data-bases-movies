@@ -16,6 +16,7 @@ class SQLConnector:
     def execute_query(self, cmd):
         self.cursor.execute(cmd)
 
+
     def close(self):
         self.connector.close()
 

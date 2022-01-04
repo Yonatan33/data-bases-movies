@@ -9,11 +9,15 @@ def push_movie(details:dict):
             if value == 'title':
                 query_values.append(f'"{details[value]}"')
                 continue
-            if value == 'genre':
+            if value == 'genres':
                 lst = [str(i) for i in details[value]]
                 genres_string = ', '.join(lst)
                 genres_string = genres_string[:-2]
                 query_values.append(f'({genres_string})')
+                continue
+            if value == "release_date":
+                date = details[value]
+                query_values.append(date[:4])
                 continue
             query_values.append(details[value])
         query = utils.generate_insert_query_with_array(params=const.api_movie_columns[i],

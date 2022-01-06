@@ -1,4 +1,3 @@
-import pandas as pd
 from csv_push_data import *
 import constants as const
 

@@ -13,7 +13,6 @@ def generate_insert_query_with_array(params: list, values: list, table_name):
         table_values += '%s, '
     table_values = table_values[:-2]
     query = f'INSERT INTO {table_name} ({table_columns}) VALUES ({table_values});'
-    #query = f'INSERT INTO {table_name} VALUES ({table_values});'
     return query
 
 

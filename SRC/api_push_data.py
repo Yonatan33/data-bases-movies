@@ -9,8 +9,8 @@ import constants as const
 
 def push_movie_to_tables(details: dict):
     push_movie_details(details)
-    # push_movie_profits(details)
-    # push_movie_genres(details)
+    push_movie_profits(details)
+    push_movie_genres(details)
 
 
 def push_movie_details(details: dict):
@@ -62,8 +62,7 @@ def push_movie_profits(details: dict):
 
 def push_series_to_tables(details: dict):
     push_series_details(details)
-    # push_series_genres(details)
-    # push_series_rating(details)
+    push_series_genres(details)
 
 
 def push_series_details(details: dict):
@@ -99,17 +98,4 @@ def push_series_genres(details: dict):
         utils.insert(query, query_values)
         utils.commit_query()
 
-'''
-def push_series_rating(details: dict):
-    params = const.api_series_columns[2]
-    table_name = const.api_series_tables[2]
-    query_values = []
-    for param in params:
-        query_values.append(details[param])
-    query = utils.generate_insert_query_with_array(params=params,
-                                                   values=query_values,
-                                                   table_name=table_name)
-    utils.insert(query, query_values)
-    utils.commit_query()
-'''
 

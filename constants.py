@@ -32,7 +32,7 @@ csv_movie_cast_columns = ['imdb_title_id', 'imdb_name_id', 'characters']
 csv_movie_details_columns = ['imdb_title_id', 'title', 'date_published', 'language']
 csv_series_details_columns = ['tconst', 'primaryTitle', 'startYear']
 csv_series_genres_columns = ['tconst', 'genres']
-csv_series_rating_columns = ['tconst', 'averageRating', 'numVotes']
+csv_series_rating_columns = ['tconst', 'numVotes', 'averageRating']
 
 csv_tables = ['movie_ratings',
               'series_ratings',
@@ -74,5 +74,8 @@ init_column_types = [[('movie_id', 'varchar(20)'), ('title', 'varchar(500) NOT N
                      [('series_id', 'varchar(20)'), ('genre_name', 'varchar(500)')]]    # series_genres
 
 init_indices = [('movie_details', 'movie_id'),
-                ('actors', 'actor_id'),
-                ('series_details', 'series_id')]
+                ('movie_genres', 'genre_name'),
+                ('actors', 'actor_name'),
+                ('series_details', 'series_id'),
+                ('series_genres', 'genre_name'),
+                ]

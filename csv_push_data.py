@@ -22,6 +22,7 @@ def push_csv_series_ratings(data_frame: pd.DataFrame):
     table_name = const.csv_tables[1]
     for row in data_array:
         row = row.tolist()
+        row[1], row[2] = row[2], row[1]
         query = utils.generate_insert_query_with_array(params=params,
                                                        values=row,
                                                        table_name=table_name)

@@ -16,6 +16,12 @@ class SQLConnector:
     def execute_query(self, cmd, values=None):
         self.cursor.execute(cmd, values)
 
+    def execute_query_no_params(self, cmd):
+        self.cursor.execute(cmd)
+
+    def fetch(self):
+        return self.cursor.fetchall()
+
     def connector_current_rows(self):
         return self.cursor.fetchall()
 

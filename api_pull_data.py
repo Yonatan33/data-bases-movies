@@ -1,5 +1,4 @@
 from tmdbv3api import *
-import sql_connector
 from api_push_data import *
 import constants as const
 tmdb = TMDb()
@@ -60,5 +59,3 @@ def pull():
     for series_id in series_obj:
         series_details = import_api_series_to_db(series_id)
         push_series_to_tables(series_details)
-
-# pull()

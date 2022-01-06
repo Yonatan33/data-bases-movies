@@ -3,11 +3,11 @@ from csv_push_data import *
 import constants as const
 
 
-def pull_csv_data():
-    # pull_csv_movie_ratings()
-    # pull_csv_series_ratings()
-    # pull_csv_actors()
-    # pull_csv_movie_cast()
+def pull():
+    pull_csv_movie_ratings()
+    pull_csv_series_ratings()
+    pull_csv_actors()
+    pull_csv_movie_cast()
     pull_csv_movie_details()
     pull_csv_movie_genres()
     pull_csv_series_details()

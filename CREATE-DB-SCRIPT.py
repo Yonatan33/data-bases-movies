@@ -1,8 +1,6 @@
 from sql_connector import SQLConnector
 import constants as const
 
-connector = SQLConnector()
-
 
 def check_if_table_exists(table):
     query = f"select table_name from INFORMATION_SCHEMA.TABLES as info where info.table_name = '{table}'"
@@ -21,6 +19,8 @@ def create_query(table_name):
             table_name == 'series_genres' or \
             table_name == 'movie_cast':
         query += f'PRIMARY KEY({const.init_column_types[i][0][0]}, {const.init_column_types[i][1][0]}));'
+    elif table_name == 'actors':
+        query += f'PRIMARY KEY({const.init_column_types[i][0][0]}), FULLTEXT({const.init_column_types[i][1][0]}));'
     else:
         query += f'PRIMARY KEY({const.init_column_types[i][0][0]}));'
     return query
@@ -30,14 +30,13 @@ def create_tables():
     for table in const.init_tables:
         if not check_if_table_exists(table):
             query = create_query(table)
-            #query = 'drop table if exists ' + table
             connector.execute_query(query)
-    # for table, column in const.init_indices:
-    index_query = f'CREATE INDEX movie_id_index ON movie_details (movie_id);'
-    connector.execute_query(index_query)
+    for table, column in const.init_indices:
+        index_query = f'CREATE INDEX {column}_index ON {table} ({column});'
+        connector.execute_query(index_query)
 
 
-# TODO - INDEX
-
-# create_tables()
-
+if __name__ == "__main__":
+    connector = SQLConnector()
+    create_tables()
+    connector.close()

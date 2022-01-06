@@ -13,7 +13,7 @@ connector = sql_connector.SQLConnector()
 
 def run():
     init_db.create_tables()
-    api_pull_data.pull()
+    # api_pull_data.pull()
     csv_pull_data.pull_csv_data()
     connector.close()
     print('Finished creating DB')

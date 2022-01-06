@@ -10,7 +10,7 @@ def generate_insert_query_with_array(params: list, values: list, table_name):
     table_columns = table_columns[:-2]
     table_values = ''
     for value in values:
-        table_values += (str(value) + ', ')
+        table_values += '%s, '
     table_values = table_values[:-2]
     query = f'INSERT INTO {table_name} ({table_columns}) VALUES ({table_values});'
     #query = f'INSERT INTO {table_name} VALUES ({table_values});'
@@ -24,9 +24,16 @@ def generate_insert_query_with_dict(details:dict, table_name):
     return query_list
 
 
-def insert(query):
+def insert(query, values):
     try:
-        connector.execute_query(query)
+        connector.execute_query(query, values)
+    except Exception as ex:
+        print(f"{type(ex).__name__} at line {ex.__traceback__.tb_lineno} of {__file__}: {ex}")
+
+
+def commit_query():
+    try:
+        connector.connector.commit()
     except Exception as ex:
         print(f"{type(ex).__name__} at line {ex.__traceback__.tb_lineno} of {__file__}: {ex}")
 

@@ -2,38 +2,114 @@ import utils
 import constants as const
 
 
-def push_movie(details:dict):
-    for i in range(len(const.api_movies_tables)):
-        query_values = []
-        for value in const.api_movie_columns[i]:
-            if value == 'title':
-                query_values.append(f'"{details[value]}"')
-                continue
-            if value == 'genres':
-                lst = [str(i) for i in details[value]]
-                genres_string = ', '.join(lst)
-                genres_string = genres_string[:-2]
-                query_values.append(f'({genres_string})')
-                continue
-            if value == "release_date":
-                date = details[value]
-                query_values.append(date[:4])
-                continue
-            query_values.append(details[value])
-        query = utils.generate_insert_query_with_array(params=const.api_movie_columns[i],
+# ****************************
+# we need to create different 'push' methods for each table
+# each method will be given its values and movie ID to push to - api_movies_tables is redundant in this case
+# we can hardwire the table name to the method inserting to it
+
+def push_movie_to_tables(details: dict):
+    push_movie_details(details)
+    # push_movie_profits(details)
+    # push_movie_genres(details)
+
+
+def push_movie_details(details: dict):
+    query_values = []
+    params = const.api_movie_columns[0]
+    table_name = const.api_movies_tables[0]
+    for value in params:
+        if value == 'title':
+            query_values.append(f'"{details[value]}"')
+            continue
+        if value == "release_date":
+            date = details[value]
+            query_values.append(date[:4])
+            continue
+        query_values.append(details[value])
+    query = utils.generate_insert_query_with_array(params=params,
+                                                   values=query_values,
+                                                   table_name=table_name)
+    utils.insert(query, query_values)
+    utils.commit_query()
+
+
+def push_movie_genres(details: dict):
+    params = const.api_movie_columns[2]
+    table_name = const.api_movies_tables[2]
+    movie_id = details['movie_id']
+    genre_list = details['genres']
+    for genre in genre_list:
+        query_values = [movie_id, genre]
+        query = utils.generate_insert_query_with_array(params=params,
                                                        values=query_values,
-                                                       table_name=const.api_movies_tables[i])
-        utils.insert(query)
+                                                       table_name=table_name)
+        utils.insert(query, query_values)
+        utils.commit_query()
 
 
-def push_series(details:dict):
-    for i in range(len(const.api_series_tables)):
-        query_values = []
-        for value in const.api_series_columns[i]:
-            query_values.append(details[value])
-        query = utils.generate_insert_query_with_array(params=const.api_series_columns[i],
+def push_movie_profits(details: dict):
+    query_values = []
+    table_name = const.api_movies_tables[1]
+    params = const.api_movie_columns[1]
+    for param in params:
+        query_values.append(details[param])
+    query = utils.generate_insert_query_with_array(params=params,
+                                                   values=query_values,
+                                                   table_name=table_name)
+    utils.insert(query, query_values)
+    utils.commit_query()
+
+
+def push_series_to_tables(details: dict):
+    push_series_details(details)
+    # push_series_genres(details)
+    # push_series_rating(details)
+
+
+def push_series_details(details: dict):
+    params = const.api_series_columns[0]
+    table_name = const.api_series_tables[0]
+    query_values = []
+    for param in params:
+        if param == 'name':
+            query_values.append(f'"{details[param]}"')
+            continue
+        if param == 'first_air_date':
+            year = str(details[param].split('-')[0])
+            query_values.append(year)
+            continue
+        query_values.append(details[param])
+    query = utils.generate_insert_query_with_array(params=params,
+                                                   values=query_values,
+                                                   table_name=table_name)
+    utils.insert(query, query_values)
+    utils.commit_query()
+
+
+def push_series_genres(details: dict):
+    params = const.api_series_columns[1]
+    table_name = const.api_series_tables[1]
+    series_id = details['series_id']
+    genre_list = details['genres']
+    for genre in genre_list:
+        query_values = [series_id, genre]
+        query = utils.generate_insert_query_with_array(params=params,
                                                        values=query_values,
-                                                       table_name=const.api_series_tables[i])
-        utils.insert(query)
+                                                       table_name=table_name)
+        utils.insert(query, query_values)
+        utils.commit_query()
 
+'''
+def push_series_rating(details: dict):
+    params = const.api_series_columns[2]
+    table_name = const.api_series_tables[2]
+    query_values = []
+    for param in params:
+        query_values.append(details[param])
+    query = utils.generate_insert_query_with_array(params=params,
+                                                   values=query_values,
+                                                   table_name=table_name)
+    utils.insert(query, query_values)
+    utils.commit_query()
+'''
 

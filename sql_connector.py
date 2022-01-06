@@ -13,11 +13,12 @@ class SQLConnector:
         )
         self.cursor = self.connector.cursor()
 
-    def execute_query(self, cmd):
-        self.cursor.execute(cmd)
+    def execute_query(self, cmd, values=None):
+        self.cursor.execute(cmd, values)
 
+    def connector_current_rows(self):
+        return self.cursor.fetchall()
 
     def close(self):
         self.connector.close()
-
 

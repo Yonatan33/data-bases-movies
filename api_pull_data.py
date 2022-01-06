@@ -19,10 +19,10 @@ def import_api_movies_to_db(movie_id):
     movie = movies.details(movie_id)
     genre_list = []
     for genre in movie.genres:
-        genre_list.append((genre["id"]))
+        genre_list.append((genre["name"]))
     # genre_list = genre_list[:-1]
     movie_details = {
-        "movie_id": movie["id"],
+        "movie_id": movie["imdb_id"],
         "title": movie["title"],
         "release_date":movie["release_date"],
         "revenue":movie["revenue"],
@@ -51,12 +51,14 @@ def import_api_series_to_db(series_obj):
     return series_details
 
 
+# ****************************
+# iterate over the dict and call the relevant push methods
 def pull():
     for movie_id in movies_ids:
         movie_details = import_api_movies_to_db(movie_id.id)
-        push_movie(movie_details)
+        push_movie_to_tables(movie_details)
     for series_id in series_obj:
         series_details = import_api_series_to_db(series_id)
-        push_series(series_details)
+        push_series_to_tables(series_details)
 
-pull()
+# pull()

@@ -2,11 +2,6 @@ import utils
 import constants as const
 
 
-# ****************************
-# we need to create different 'push' methods for each table
-# each method will be given its values and movie ID to push to - api_movies_tables is redundant in this case
-# we can hardwire the table name to the method inserting to it
-
 def push_movie_to_tables(details: dict):
     push_movie_details(details)
     push_movie_profits(details)

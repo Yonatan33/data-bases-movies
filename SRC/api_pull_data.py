@@ -19,7 +19,6 @@ def import_api_movies_to_db(movie_id):
     genre_list = []
     for genre in movie.genres:
         genre_list.append((genre["name"]))
-    # genre_list = genre_list[:-1]
     movie_details = {
         "movie_id": movie["imdb_id"],
         "title": movie["title"],
@@ -38,8 +37,6 @@ def import_api_series_to_db(series_obj):
         for genre_element in genres_dict:
             if genre_element['id'] == genre:
                 genre_list.append(genre_element["name"])
-
-    # genre_list = genre_list[:-1]
     series_details = {
         "series_id": series_obj["id"],
         "name": series_obj["name"],
@@ -50,7 +47,6 @@ def import_api_series_to_db(series_obj):
     return series_details
 
 
-# ****************************
 # iterate over the dict and call the relevant push methods
 def pull():
     for movie_id in movies_ids:

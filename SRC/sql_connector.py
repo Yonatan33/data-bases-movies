@@ -22,9 +22,6 @@ class SQLConnector:
     def fetch(self):
         return self.cursor.fetchall()
 
-    def connector_current_rows(self):
-        return self.cursor.fetchall()
-
     def close(self):
         self.connector.close()
 

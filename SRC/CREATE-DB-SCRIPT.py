@@ -5,7 +5,7 @@ import constants as const
 def check_if_table_exists(table):
     query = f"select table_name from INFORMATION_SCHEMA.TABLES as info where info.table_name = '{table}'"
     connector.execute_query(query)
-    answer = connector.connector_current_rows()
+    answer = connector.fetch()
     return answer
 
 

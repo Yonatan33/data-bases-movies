@@ -154,6 +154,8 @@ def query_9():
 if __name__ == "__main__":
     print(f'**** Query 1 execution****')
     user_from, user_to = input("Enter year to start the search from"), input("Enter year to end the search at")
+    assert user_from.isnumeric() and (0 <= int(user_from) <= 2022), 'Please enter a valid start year'
+    assert user_to.isnumeric() and (0 <= int(user_to) <= 2022) and user_to >= user_from, 'Please enter a valid end year'
     query_1(user_from, user_to)
     print(f'**** Query 2 execution****')
     query_2()
